@@ -1,3 +1,7 @@
+.vulpress-app {
+    @import "node_modules/tailwindcss/src/css/preflight.css"
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

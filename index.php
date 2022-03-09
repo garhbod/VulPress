@@ -28,14 +28,16 @@ new class {
     /**
      * Register custom fields for plugin settings
      */
-    public function registerSettings() {
+    public function registerSettings()
+    {
         register_setting('vulpress_settings', 'vulpress-settings');
     }
 
     /**
      * Add plugin's settings page to admin control panel
      */
-    public function addSettingsPage() {
+    public function addSettingsPage()
+    {
         $page = add_menu_page(
             __('VulPress - Settings', 'example-plugin'), //Title of the page
             __('VulPress', 'example-plugin'), //Text to show on the menu link
@@ -59,7 +61,8 @@ new class {
     /**
      * Add plugin's settings page to admin control panel
      */
-    public function enqueueSettingsPageAssets() {
+    public function enqueueSettingsPageAssets()
+    {
         if (!empty($this->config['isDev'])) {
             wp_enqueue_script('vulpress-script', 'http://localhost:3000/src/main.js');
             add_filter('script_loader_tag', function ($tag, $handle, $src) {
@@ -67,5 +70,17 @@ new class {
                     '<script  type="module" src="' . esc_url($src) . '"></script>';
             }, 10, 3);
         }
+
+        wp_localize_script('vulpress-script', 'vulpress_config', $this->getPluginConfig());
+    }
+
+    /**
+     * Add plugin's settings page to admin control panel
+     */
+    public function getPluginConfig(): array
+    {
+        return [
+            'plugin_dir_url' => plugin_dir_url(__FILE__),
+        ];
     }
 };

@@ -5,5 +5,9 @@ module.exports = {
     theme: {
         extend: {},
     },
+    important: ".vulpress-app",
+    corePlugins: {
+        preflight: false,
+    },
     plugins: [],
 };
