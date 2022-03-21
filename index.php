@@ -17,12 +17,14 @@ defined('ABSPATH') || die; // Blocks direct access
 new class {
 
     private array $config = [];
+    private string $ajax_action = 'save_vulpress_settings';
 
     public function __construct()
     {
         if (file_exists($config_path = plugin_dir_path(__FILE__) . 'config.php')) $this->config = include $config_path;
         //add_action('admin_init', [$this, 'registerSettings']);
         add_action('admin_menu', [$this, 'addSettingsPage']);
+        add_action("wp_ajax_{$this->ajax_action}", [$this, 'storePluginSettings']);
     }
 
     /**
@@ -75,12 +77,40 @@ new class {
     }
 
     /**
-     * Add plugin's settings page to admin control panel
+     * Data to pass to vue instance
      */
     public function getPluginConfig(): array
     {
         return [
             'plugin_dir_url' => plugin_dir_url(__FILE__),
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'ajax_action' => $this->ajax_action,
         ];
+    }
+
+    /**
+     * Get settings for vue instance
+     */
+    public function getPluginSettings()
+    {
+        get_option('vulpress');
+    }
+
+    /**
+     * Store settings from vue submission
+     */
+    public function storePluginSettings()
+    {
+        $successful = update_option(
+            'vulpress',
+            filter_input(INPUT_POST, 'settings', FILTER_SANITIZE_STRING, FILTER_FORCE_ARRAY),
+            true
+        );
+
+        echo json_encode([
+            'updated' => $successful,
+        ]);
+
+        wp_die();
     }
 };

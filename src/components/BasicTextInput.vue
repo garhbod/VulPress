@@ -13,7 +13,12 @@ export default {
     <div class="flex flex-col mb-4">
         <label class="text-lg mb-2">{{ label }}</label>
         <div>
-            <input class="px-4 py-2 w-96" type="text" :value="modelValue" @input="updateValue" />
+            <input
+                class="px-4 py-2 w-96"
+                type="text"
+                :value="modelValue"
+                @input="updateValue"
+            />
         </div>
     </div>
 </template>
