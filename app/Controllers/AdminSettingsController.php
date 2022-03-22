@@ -10,8 +10,6 @@ class AdminSettingsController
 
     private Plugin $plugin;
 
-    private array $config = [];
-
     private string $option_name = 'vulpress';
 
     private string $ajax_get_action = 'get_vulpress_settings';
@@ -21,7 +19,7 @@ class AdminSettingsController
     public function __construct()
     {
         $this->plugin = Plugin::getInstance();
-        if (file_exists($config_path = $this->plugin->getPluginPath() . 'config.php')) $this->config = include $config_path;
+        
         add_action('admin_menu', [$this, 'addSettingsPage']);
         add_action("wp_ajax_{$this->ajax_get_action}", [$this, 'getPluginSettings']);
         add_action("wp_ajax_{$this->ajax_store_action}", [$this, 'storePluginSettings']);
@@ -57,15 +55,15 @@ class AdminSettingsController
      */
     public function enqueueSettingsPageAssets()
     {
-        if (!empty($this->config['isDev'])) {
+        if (defined('VULPRESS_DEV') && VULPRESS_DEV) {
             wp_enqueue_script("{$this->plugin->getPluginSlug()}-script", 'http://localhost:3000/resources/assets/js/main.js');
             add_filter('script_loader_tag', function ($tag, $handle, $src) {
                 return "{$this->plugin->getPluginSlug()}-script" !== $handle ? $tag :
                     '<script  type="module" src="' . esc_url($src) . '"></script>';
             }, 10, 3);
         } else {
-            wp_enqueue_style("{$this->plugin->getPluginSlug()}-styles", $this->plugin->getPluginUrl() . 'dist/style.css', [], $this->plugin->getVersion());
-            wp_enqueue_script("{$this->plugin->getPluginSlug()}-script",  $this->plugin->getPluginUrl() . 'dist/my-lib.umd.js', [], $this->plugin->getVersion(), true);
+            wp_enqueue_style("{$this->plugin->getPluginSlug()}-styles", $this->plugin->getPluginUrl() . 'assets/compiled/style.css', [], $this->plugin->getVersion());
+            wp_enqueue_script("{$this->plugin->getPluginSlug()}-script",  $this->plugin->getPluginUrl() . 'assets/compiled/my-lib.umd.js', [], $this->plugin->getVersion(), true);
         }
 
         wp_localize_script("{$this->plugin->getPluginSlug()}-script", 'vulpress_config', $this->getPluginConfig());

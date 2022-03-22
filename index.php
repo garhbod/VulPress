@@ -14,6 +14,9 @@
 
 defined('ABSPATH') || die; // Blocks direct access
 
+/* Set to true while developing locally with vite */
+//define('VULPRESS_DEV', true);
+
 require __DIR__ . '/bootstrap/autoloader.php';
 require __DIR__ . '/bootstrap/functions.php';
 

@@ -13,6 +13,7 @@ export default defineConfig({
         },
     },
     build: {
+        outDir: "assets/compiled",
         lib: {
             entry: path.resolve(__dirname, "resources/assets/js/main.js"),
             name: "MyLib",
