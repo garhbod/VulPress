@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import { usePluginConfig } from "@/composables/usePluginConfig";
+import { usePluginConfig } from "@/js/composables/usePluginConfig";
 const pluginConfig = usePluginConfig();
 </script>
 
@@ -12,7 +12,7 @@ const pluginConfig = usePluginConfig();
                     <div class="p-8">
                         <img
                             alt="Vue logo"
-                            :src="`${pluginConfig.plugin_dir_url}/src/assets/logo.svg`"
+                            :src="`${pluginConfig.plugin_dir_url}/assets/images/logo.svg`"
                             width="125"
                             height="125"
                         />

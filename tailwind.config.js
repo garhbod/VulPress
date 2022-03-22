@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 module.exports = {
-    content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
+    content: ["./resources/assets/js/**/*.{vue,js,ts,jsx,tsx}"],
     theme: {
         extend: {},
     },

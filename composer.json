@@ -1,7 +1,0 @@
-{
-    "name": "garhbod/vulpress",
-    "description": "A starting point for developing WordPress plugins using Vue 3 and Tailwind",
-    "config": {
-        "sort-packages": true
-    }
-}

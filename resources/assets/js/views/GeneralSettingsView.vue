@@ -1,25 +1,40 @@
 <script setup>
 /* globals jQuery */
-import { ref, unref } from "vue";
-import BasicTextInput from "@/components/BasicTextInput.vue";
-import SubmitButton from "@/components/SubmitButton.vue";
-import { usePluginConfig } from "@/composables/usePluginConfig";
+import { ref, unref, onMounted } from "vue";
+import BasicTextInput from "@/js/components/BasicTextInput.vue";
+import SubmitButton from "@/js/components/SubmitButton.vue";
+import { usePluginConfig } from "@/js/composables/usePluginConfig";
 const pluginConfig = usePluginConfig();
 
 const settings = ref({
     first: "",
 });
 
+onMounted(() => {
+    jQuery.post(
+        pluginConfig.value.ajax_url,
+        {
+            action: pluginConfig.value.ajax_get_action,
+        },
+        function (response) {
+            settings.value = response
+            console.log(response);
+        },
+        "json"
+    );
+});
+
 const submitForm = () => {
     jQuery.post(
         pluginConfig.value.ajax_url,
         {
-            action: pluginConfig.value.ajax_action,
+            action: pluginConfig.value.ajax_store_action,
             settings: unref(settings),
         },
         function (response) {
             console.log(response, response.updated, !!response.tisjd);
-        }
+        },
+        "json"
     );
 };
 </script>
@@ -32,7 +47,6 @@ const submitForm = () => {
                 label="First Setting"
                 v-model="settings.first"
             ></basic-text-input>
-            {{ settings }}
             <div>
                 <submit-button>Save</submit-button>
             </div>

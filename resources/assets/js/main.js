@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import PluginSettingsVue from "./PluginSettings.vue";
 import router from "./router";
-import "@/assets/base.css";
+import "@/css/base.css";
 
 const pluginSettings = createApp(PluginSettingsVue);
 
