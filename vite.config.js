@@ -9,13 +9,13 @@ export default defineConfig({
     plugins: [vue()],
     resolve: {
         alias: {
-            "@": fileURLToPath(new URL("./resources/assets", import.meta.url)),
+            "@": fileURLToPath(new URL("./resources", import.meta.url)),
         },
     },
     build: {
         outDir: "assets/compiled",
         lib: {
-            entry: path.resolve(__dirname, "resources/assets/js/main.js"),
+            entry: path.resolve(__dirname, "resources/js/main.js"),
             name: "MyLib",
             formats: ["umd"],
             fileName: (format) => `my-lib.${format}.js`,

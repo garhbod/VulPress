@@ -12,7 +12,7 @@ const pluginConfig = usePluginConfig();
                     <div class="p-8">
                         <img
                             alt="Vue logo"
-                            :src="`${pluginConfig.plugin_dir_url}/assets/images/logo.svg`"
+                            :src="`${pluginConfig.plugin_dir_url}/images/logo.svg`"
                             width="125"
                             height="125"
                         />

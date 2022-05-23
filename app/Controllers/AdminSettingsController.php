@@ -19,7 +19,7 @@ class AdminSettingsController
     public function __construct()
     {
         $this->plugin = Plugin::getInstance();
-        
+
         add_action('admin_menu', [$this, 'addSettingsPage']);
         add_action("wp_ajax_{$this->ajax_get_action}", [$this, 'getPluginSettings']);
         add_action("wp_ajax_{$this->ajax_store_action}", [$this, 'storePluginSettings']);
@@ -56,7 +56,7 @@ class AdminSettingsController
     public function enqueueSettingsPageAssets()
     {
         if (defined('VULPRESS_DEV') && VULPRESS_DEV) {
-            wp_enqueue_script("{$this->plugin->getPluginSlug()}-script", 'http://localhost:3000/resources/assets/js/main.js');
+            wp_enqueue_script("{$this->plugin->getPluginSlug()}-script", 'http://localhost:3000/resources/js/main.js');
             add_filter('script_loader_tag', function ($tag, $handle, $src) {
                 return "{$this->plugin->getPluginSlug()}-script" !== $handle ? $tag :
                     '<script  type="module" src="' . esc_url($src) . '"></script>';
